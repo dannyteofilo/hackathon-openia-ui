@@ -201,13 +201,7 @@
     <!-- Elemento de respuesta -->
     <div id="responseContainer" class="mt-4 text-center text-white"></div>
     <!-- Elemento de imagen de respuesta -->
-    <img
-      id="responseImage"
-      src=""
-      alt=""
-      class="mt-4 mx-auto"
-      style="max-width: 100%"
-    />
+    <div id="responseImage"></div>
 
     <!-- Elemento de carga y mensaje -->
     <div
@@ -225,19 +219,22 @@
     </div>
 
     <script>
-      window.onload = (event) => {
-        const dismiss = document.getElementById("dismiss-div");
-        const display = document.getElementById("display-div");
+      window.onload = () => {
+        const dismissDiv = document.getElementById("dismiss-div");
+        const displayDiv = document.getElementById("display-div");
         const loadingContainer = document.getElementById("loadingContainer");
+
         loadingContainer.style.display = "none";
 
         setTimeout(() => {
-          dismiss.style.opacity = 0;
+          dismissDiv.style.opacity = 0;
+
           setTimeout(() => {
-            dismiss.style.position = "absolute";
-            display.style.position = "relative";
-            display.style.opacity = 1;
+            dismissDiv.style.position = "absolute";
+            displayDiv.style.position = "relative";
+            displayDiv.style.opacity = 1;
           }, 1000);
+
           setTimeout(() => {}, 1200);
         }, 2000);
       };
@@ -250,7 +247,7 @@
         errorMessage.textContent = message;
         modal.classList.remove("hidden");
 
-        closeModalButton.addEventListener("click", function () {
+        closeModalButton.addEventListener("click", () => {
           modal.classList.add("hidden");
         });
       }
@@ -258,10 +255,12 @@
       function handleSubmit() {
         const loadingContainer = document.getElementById("loadingContainer");
         const responseContainer = document.getElementById("responseContainer");
-        responseContainer.innerText = ""; // Limpiar el contenido del contenedor de respuesta
+        const responseImageContainer = document.getElementById("responseImage");
 
-        // Mostrar el elemento de carga
+        responseContainer.innerText = "";
+        responseImageContainer.innerHTML = "";
         loadingContainer.style.display = "flex";
+
         const miedo = document.getElementById("miedo").value;
         const ansiedad = document.getElementById("ansiedad").value;
         const objeto = document.getElementById("objeto").value;
@@ -278,26 +277,25 @@
             "Access-Control-Allow-Origin": "*",
           },
         })
-          .then(function (response) {
-            console.log(response);
+          .then((response) => {
             if (response.ok) {
               return response.json();
             } else {
               showErrorModal(
-                "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+                "Al parecer aún no estás listo para descubrir esta historia. Inténtalo de nuevo."
               );
+              throw new Error("Error en la respuesta de la solicitud.");
             }
           })
           .then((data) => {
-            console.log("data: ", data);
             loadingContainer.style.display = "none";
             responseContainer.innerText = data.text;
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.error(error);
             loadingContainer.style.display = "none";
             showErrorModal(
-              "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+              "Al parecer aún no estás listo para descubrir esta historia. Inténtalo de nuevo."
             );
           });
 
@@ -313,26 +311,27 @@
             "Access-Control-Allow-Origin": "*",
           },
         })
-          .then(function (response) {
-            console.log(response);
+          .then((response) => {
             if (response.ok) {
               return response.json();
             } else {
               showErrorModal(
-                "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+                "Al parecer aún no estás listo para descubrir esta historia. Inténtalo de nuevo."
               );
+              throw new Error("Error en la respuesta de la solicitud.");
             }
           })
           .then((data) => {
-            console.log("data image: ", data);
-            const responseImage = document.getElementById("responseImage");
-            responseImage.setAttribute("src", data.url);
+            const image = document.createElement("img");
+            image.src = data.data.url;
+            image.alt = "Descripción de la imagen";
+            responseImageContainer.appendChild(image);
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.error(error);
             loadingContainer.style.display = "none";
             showErrorModal(
-              "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+              "Al parecer aún no estás listo para descubrir esta historia. Inténtalo de nuevo."
             );
           });
       }
