@@ -184,6 +184,35 @@
         }, 2000);
       }
 
+      function handleSubmit() {
+        const q1 = document.getElementById("question1").value;
+        const q2 = document.getElementById("question2").value;
+        const q3 = document.getElementById("question3").value;
+
+        fetch("/chat/sendToChatGPT", {
+          method: "POST",
+          // Agrega las opciones de la solicitud, como el cuerpo con los datos de inicio de sesión
+          body: JSON.stringify({
+            q1: q1,
+            q2: q2,
+            q3: q3,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            // Maneja los errores de la solicitud
+            console.error(error);
+
+            // Redirige a una página de inicio de sesión fallida o muestra un mensaje de error
+            // ...
+          });
+      }
+
     </script>
   </body>
 </html>
