@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const apiKey = 'to-do';
+
 const openAiController = {
 
   sendToChatGPT: function (req, res) {
@@ -7,7 +9,6 @@ const openAiController = {
     //res.render('welcome/index');
     //res.send('¡Hola, mundo! desde el Welcome controller');
     console.log('Peticion recibida', req.body)
-    const apiKey = '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';
     const url = 'https://api.openai.com/v1/chat/completions';
 
     axios.post(url, {
@@ -38,7 +39,6 @@ const openAiController = {
 
   generateImg : function (req, res) {
     // Parámetros de configuración
-    const apiKey = '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'; // Reemplaza con tu propia clave de API
     const prompt = `Una imagen que tenga que ver con los temas de ${req.body.miedo}, ${req.body.ansiedad} y ${req.body.objeto}`; // Texto que sirve de inspiración para la generación de la imagen
     const numImages = 1; // Número de imágenes a generar
 
