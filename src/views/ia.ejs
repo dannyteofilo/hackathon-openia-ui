@@ -4,21 +4,25 @@
   <head>
     <meta charset="UTF-8" />
     <title>IA Page</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.png" />
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
       .texto {
-        font-family: 'VT323', monospace;
+        font-family: 'Jolly Lodger', cursive;
+        letter-spacing: 1px;
       }
 
       .btn-blood {
-        background-color: red;
+        font-size: 20px;
+        min-width: 120px;
+        background-color: rgba(156, 0, 1, 0.8);
         color: white;
         font-weight: bold;
-        padding: 10px 20px;
+        padding: 5px 10px;
         border: none;
         border-radius: 10px;
         position: relative;
@@ -40,6 +44,32 @@
 
       .btn-blood:hover::before {
         left: 100%;
+      }
+
+      .form-input {
+        min-width: 250px;
+        background-color: rgba(150, 150, 150, 0.5);
+        color: white;
+        font-size: 20px;
+      }
+
+      .form-label {
+        font-size: 24px;
+        text-align: center;
+        color: whitesmoke;
+      }
+
+      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #bbbbbb !important;
+        opacity: 1; /* Firefox */
+      }
+
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #bbbbbb !important;
+      }
+
+      ::-ms-input-placeholder { /* Microsoft Edge */
+        color: #bbbbbb !important;
       }
     </style>
   </head>
