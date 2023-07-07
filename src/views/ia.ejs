@@ -16,6 +16,12 @@
         letter-spacing: 1px;
       }
 
+      .image-background {
+        background-image: url('/assets/fondo.png');
+        background-position: center;
+        background-size: cover;
+      }
+
       .btn-blood {
         font-size: 20px;
         min-width: 120px;
@@ -71,11 +77,33 @@
       ::-ms-input-placeholder { /* Microsoft Edge */
         color: #bbbbbb !important;
       }
+
+      .transitionable {
+        transition: all ease 1s;
+      }
     </style>
   </head>
-  <body class="bg-black">
-    <div class="flex flex-col items-center justify-center h-screen">
+  <body class="image-background">
+    <div id="dismiss-div" class="flex flex-col items-center justify-center h-screen transitionable bg-black">
       <h1 class="text-4xl font-bold text-white texto">¿Estas listo para descubrir tus mayores temores?</h1>
     </div>
+
+    <script>
+
+      window.onload = (event) => {
+        console.log('onload');
+        const element = document.getElementById('dismiss-div');
+        setTimeout(() => {
+          element.style.opacity = 0;
+          setTimeout(() => {
+            // element.style.position = 'absolute';
+          }, 1000);
+          setTimeout(() => {
+            element.style.position = 'absolute';
+          }, 1200);
+        }, 2000);
+      }
+
+    </script>
   </body>
 </html>
