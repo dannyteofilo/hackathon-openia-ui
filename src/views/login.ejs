@@ -128,18 +128,16 @@
       </form>
     </div>
     <script>
-      // Espera a que el documento esté completamente cargado
-      document.addEventListener("DOMContentLoaded", function () {
         // Función para manejar el inicio de sesión
         function handleLogin() {
           // Obtén los valores de los campos de entrada
           const username = document.getElementById("username").value;
           const password = document.getElementById("password").value;
-
+  
           // Realiza la solicitud de inicio de sesión al endpoint
           // Aquí puedes llamar a la función o método que realiza la lógica de inicio de sesión en el controlador UserController
-
-          // Por ejemplo, si estás utilizando Express y la ruta '/user/register' está configurada para el controlador UserController.register
+  
+          // Por ejemplo, si estás utilizando Express y la ruta '/user/login' está configurada para el controlador UserController.login
           fetch("/auth/register", {
             method: "POST",
             // Agrega las opciones de la solicitud, como el cuerpo con los datos de inicio de sesión
@@ -152,23 +150,17 @@
             },
           })
             .then(function (response) {
-              // Maneja la respuesta de la solicitud, redirige a una página de inicio de sesión exitosa o muestra un mensaje de error
-              // ...
+                console.log(response)
+                window.location.href = "/ia";
             })
             .catch(function (error) {
               // Maneja los errores de la solicitud
               console.error(error);
+
               // Redirige a una página de inicio de sesión fallida o muestra un mensaje de error
               // ...
             });
         }
-
-        // Obtén el botón de inicio de sesión por su id
-        const loginButton = document.getElementById("loginButton");
-
-        // Agrega un controlador de eventos al botón de inicio de sesión
-        loginButton.addEventListener("click", handleLogin);
-      });
-    </script>
+      </script>
   </body>
 </html>
