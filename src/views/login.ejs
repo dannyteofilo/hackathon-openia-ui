@@ -9,9 +9,10 @@
       rel="stylesheet"
     />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
       .texto {
-        font-family: 'VT323', monospace;
+        font-family: 'Jolly Lodger', cursive;
+        letter-spacing: 1px;
       }
 
       /* Estilos personalizados */
@@ -24,7 +25,7 @@
       }
 
       .btn-blood {
-        background-color: red;
+        background-color: #9C0001;
         color: white;
         font-weight: bold;
         padding: 10px 20px;
@@ -55,16 +56,34 @@
         margin-left: auto;
         margin-right: auto;
       }
+
+      .image-background {
+        background-image: url('/assets/fondo.png');
+        background-position: center;
+        background-size: cover;
+      }
+
+      .ojo-gif {
+        height: 150px;
+        width: 150px;
+        object-fit: contain;
+        object-position: center;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 50%;
+        margin-bottom: 20px;
+      }
     </style>
   </head>
-  <body>
+  <body class="image-background">
     <div class="flex items-center justify-center h-screen">
-      <form class="bg-dark shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <img src="">
+      <form class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <img src="/assets/ojo.gif" class="ojo-gif">
         <!-- Usuario -->
         <div class="mb-4">
           <label
             class="block text-gray-700 text-sm font-bold mb-2 text-white texto"
+            style="font-size: 18px; text-align: center; color: whitesmoke;"
             for="username"
           >
             Usuario
@@ -80,6 +99,7 @@
         <div class="mb-6">
           <label
             class="block text-gray-700 text-sm font-bold mb-2 text-white texto"
+            style="font-size: 18px; text-align: center; color: whitesmoke;"
             for="password"
           >
             Contraseña
@@ -102,7 +122,7 @@
             type="button"
             onclick="handleLogin()"
           >
-            Inicia sesión
+            Entrar
           </button>
         </div>
       </form>
