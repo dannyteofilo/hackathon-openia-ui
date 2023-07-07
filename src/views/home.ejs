@@ -9,13 +9,14 @@
       rel="stylesheet"
     />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
       .texto {
-        font-family: 'VT323', monospace;
+        font-family: 'Jolly Lodger', cursive;
+        letter-spacing: 1px;
       }
 
       .btn-blood {
-        background-color: red;
+        background-color: #9C0001;
         color: white;
         font-weight: bold;
         padding: 10px 20px;
@@ -41,9 +42,22 @@
       .btn-blood:hover::before {
         left: 100%;
       }
+
+      .image-background {
+        background-image: url('/assets/fondo.png');
+        background-position: center;
+        background-size: cover;
+      }
+
+      .image-back {
+        opacity: 0.2;
+        background-color: #1d0000;
+        position: absolute;
+      }
     </style>
   </head>
-  <body class="bg-black">
+  <body class="image-background">
+    <div class="image-back h-screen"></div>
     <div class="flex flex-col items-center justify-center h-screen">
       <h1 class="text-4xl font-bold text-white texto">¿Estas listo para descubrir tus mayores temores?</h1>
       <p class="text-lg text-white texto">Aqui encontraras historias que te helaran la sangre, preparate</p>
