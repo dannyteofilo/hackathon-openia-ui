@@ -10,9 +10,9 @@
       rel="stylesheet"
     />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap");
       .texto {
-        font-family: 'Jolly Lodger', cursive;
+        font-family: "Jolly Lodger", cursive;
         letter-spacing: 1px;
       }
 
@@ -61,7 +61,7 @@
       }
 
       .image-background {
-        background-image: url('/assets/fondo.png');
+        background-image: url("/assets/fondo.png");
         background-position: center;
         background-size: cover;
       }
@@ -90,24 +90,31 @@
         color: whitesmoke;
       }
 
-      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      ::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: #bbbbbb !important;
         opacity: 1; /* Firefox */
       }
 
-      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      :-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
         color: #bbbbbb !important;
       }
 
-      ::-ms-input-placeholder { /* Microsoft Edge */
+      ::-ms-input-placeholder {
+        /* Microsoft Edge */
         color: #bbbbbb !important;
+      }
+
+      #errorModal {
+        backdrop-filter: blur(3px);
       }
     </style>
   </head>
   <body class="image-background">
     <div class="flex items-center justify-center h-screen">
       <form class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <img src="/assets/ojo.gif" class="ojo-gif">
+        <img src="/assets/ojo.gif" class="ojo-gif" />
         <!-- Usuario -->
         <div class="mb-4">
           <label
@@ -154,40 +161,63 @@
         </div>
       </form>
     </div>
+    <div
+      id="errorModal"
+      class="fixed inset-0 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-gray-800 bg-opacity-75 flex flex-col items-center justify-center p-4 rounded"
+      >
+        <h2 class="text-white text-2xl font-bold mb-4">Error</h2>
+        <p class="text-white text-lg" id="errorMessage"></p>
+        <button id="closeModalButton" class="btn-blood mt-4">Cerrar</button>
+      </div>
+    </div>
     <script>
-        // Función para manejar el inicio de sesión
-        function handleLogin() {
-          // Obtén los valores de los campos de entrada
-          const username = document.getElementById("username").value;
-          const password = document.getElementById("password").value;
-  
-          // Realiza la solicitud de inicio de sesión al endpoint
-          // Aquí puedes llamar a la función o método que realiza la lógica de inicio de sesión en el controlador UserController
-  
-          // Por ejemplo, si estás utilizando Express y la ruta '/user/login' está configurada para el controlador UserController.login
-          fetch("/auth/register", {
-            method: "POST",
-            // Agrega las opciones de la solicitud, como el cuerpo con los datos de inicio de sesión
-            body: JSON.stringify({
-              username: username,
-              password: password,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then(function (response) {
-                console.log(response)
-                window.location.href = "/ia";
-            })
-            .catch(function (error) {
-              // Maneja los errores de la solicitud
-              console.error(error);
+      function showErrorModal(message) {
+        const modal = document.getElementById("errorModal");
+        const errorMessage = document.getElementById("errorMessage");
+        const closeModalButton = document.getElementById("closeModalButton");
 
-              // Redirige a una página de inicio de sesión fallida o muestra un mensaje de error
-              // ...
-            });
-        }
-      </script>
+        errorMessage.textContent = message;
+        modal.classList.remove("hidden");
+
+        closeModalButton.addEventListener("click", function () {
+          modal.classList.add("hidden");
+        });
+      }
+      
+      function handleLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        fetch("/auth/register", {
+          method: "POST",
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then(function (response) {
+            if (response.ok) {
+              window.location.href = "/ia";
+            } else {
+              console.error("aca");
+              showErrorModal(
+                "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+              );
+            }
+          })
+          .catch(function (error) {
+            console.error("error: ", error);
+            showErrorModal(
+              "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+            );
+          });
+      }
+    </script>
   </body>
 </html>
