@@ -1,0 +1,154 @@
+<!-- src/views/login.ejs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inicio de sesión</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+      .texto {
+        font-family: 'VT323', monospace;
+      }
+
+      /* Estilos personalizados */
+      body {
+        background-color: black;
+      }
+
+      .bg-dark {
+        background-color: #222;
+      }
+
+      .btn-blood {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-blood::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 0, 0, 0.5);
+        transform: skewX(-30deg);
+        transition: left 0.3s;
+        z-index: -1;
+      }
+
+      .btn-blood:hover::before {
+        left: 100%;
+      }
+
+      .centered {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex items-center justify-center h-screen">
+      <form class="bg-dark shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <img src="">
+        <!-- Usuario -->
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 text-white texto"
+            for="username"
+          >
+            Usuario
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="Ingrese su nombre de usuario"
+          />
+        </div>
+        <!-- Contraseña -->
+        <div class="mb-6">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 text-white texto"
+            for="password"
+          >
+            Contraseña
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            type="password"
+            placeholder="Ingrese su contraseña"
+          />
+          <!-- <p class="text-red-500 text-xs italic">
+            Ingrese una contraseña válida.
+          </p> -->
+        </div>
+        <!-- Botón -->
+        <div class="flex items-center justify-between centered">
+          <button
+            id="loginButton"
+            class="btn-blood hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline centered texto"
+            type="button"
+            onclick="handleLogin()"
+          >
+            Inicia sesión
+          </button>
+        </div>
+      </form>
+    </div>
+    <script>
+      // Espera a que el documento esté completamente cargado
+      document.addEventListener("DOMContentLoaded", function () {
+        // Función para manejar el inicio de sesión
+        function handleLogin() {
+          // Obtén los valores de los campos de entrada
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Realiza la solicitud de inicio de sesión al endpoint
+          // Aquí puedes llamar a la función o método que realiza la lógica de inicio de sesión en el controlador UserController
+
+          // Por ejemplo, si estás utilizando Express y la ruta '/user/register' está configurada para el controlador UserController.register
+          fetch("/auth/register", {
+            method: "POST",
+            // Agrega las opciones de la solicitud, como el cuerpo con los datos de inicio de sesión
+            body: JSON.stringify({
+              username: username,
+              password: password,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then(function (response) {
+              // Maneja la respuesta de la solicitud, redirige a una página de inicio de sesión exitosa o muestra un mensaje de error
+              // ...
+            })
+            .catch(function (error) {
+              // Maneja los errores de la solicitud
+              console.error(error);
+              // Redirige a una página de inicio de sesión fallida o muestra un mensaje de error
+              // ...
+            });
+        }
+
+        // Obtén el botón de inicio de sesión por su id
+        const loginButton = document.getElementById("loginButton");
+
+        // Agrega un controlador de eventos al botón de inicio de sesión
+        loginButton.addEventListener("click", handleLogin);
+      });
+    </script>
+  </body>
+</html>
