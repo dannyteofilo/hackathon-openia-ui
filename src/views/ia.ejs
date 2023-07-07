@@ -17,7 +17,7 @@
       }
 
       .image-background {
-        background-image: url('/assets/fondo.png');
+        background-image: url("/assets/fondo.png");
         background-position: center;
         background-size: cover;
       }
@@ -110,7 +110,10 @@
     </style>
   </head>
   <body class="image-background">
-    <div id="dismiss-div" class="flex flex-col items-center justify-center h-screen transitionable bg-black">
+    <div
+      id="dismiss-div"
+      class="flex flex-col items-center justify-center h-screen transitionable bg-black"
+    >
       <h1 class="text-4xl font-bold text-white texto">
         ¿Estas listo para descubrir tus mayores temores?
       </h1>
@@ -139,7 +142,8 @@
             class="block text-gray-700 text-sm font-bold mb-2 text-white texto form-label"
             for="ansiedad"
           >
-            ¿Hay alguna situación o escenario que te cause una ansiedad imparable?
+            ¿Hay alguna situación o escenario que te cause una ansiedad
+            imparable?
           </label>
           <input
             class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline texto form-input"
@@ -177,11 +181,52 @@
       </form>
     </div>
 
-    <script>
+    <!-- Elemento de MODAL ERROR -->
+    <div
+      id="errorModal"
+      class="fixed inset-0 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-gray-800 bg-opacity-75 flex flex-col items-center justify-center p-4 rounded"
+      >
+        <h2 class="text-white text-2xl font-bold mb-4">Error</h2>
+        <p class="text-white text-lg" id="errorMessage"></p>
+        <button id="closeModalButton" class="btn-blood mt-4">Cerrar</button>
+      </div>
+    </div>
+    <!-- Elemento de respuesta -->
+    <div id="responseContainer" class="mt-4 text-center text-white"></div>
+    <!-- Elemento de imagen de respuesta -->
+    <img
+      id="responseImage"
+      src=""
+      alt=""
+      class="mt-4 mx-auto"
+      style="max-width: 100%"
+    />
 
+    <!-- Elemento de carga y mensaje -->
+    <div
+      id="loadingContainer"
+      class="flex items-center justify-center h-screen fixed inset-0 bg-gray-900 bg-opacity-50"
+    >
+      <div class="flex items-center bg-white rounded-lg p-5">
+        <div class="mr-3">
+          <div
+            class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"
+          ></div>
+        </div>
+        <div class="text-gray-900">Cargando...</div>
+      </div>
+    </div>
+
+    <script>
       window.onload = (event) => {
-        const dismiss = document.getElementById('dismiss-div');
-        const display = document.getElementById('display-div');
+        const dismiss = document.getElementById("dismiss-div");
+        const display = document.getElementById("display-div");
+        const loadingContainer = document.getElementById("loadingContainer");
+        loadingContainer.style.display = "none";
+
         setTimeout(() => {
           dismiss.style.opacity = 0;
           setTimeout(() => {
@@ -192,37 +237,102 @@
             }, 200);
           }, 1000);
         }, 2000);
+      };
+
+      function showErrorModal(message) {
+        const modal = document.getElementById("errorModal");
+        const errorMessage = document.getElementById("errorMessage");
+        const closeModalButton = document.getElementById("closeModalButton");
+
+        errorMessage.textContent = message;
+        modal.classList.remove("hidden");
+
+        closeModalButton.addEventListener("click", function () {
+          modal.classList.add("hidden");
+        });
       }
 
       function handleSubmit() {
-        const q1 = document.getElementById("question1").value;
-        const q2 = document.getElementById("question2").value;
-        const q3 = document.getElementById("question3").value;
+        const loadingContainer = document.getElementById("loadingContainer");
+        const responseContainer = document.getElementById("responseContainer");
+        responseContainer.innerText = ""; // Limpiar el contenido del contenedor de respuesta
 
-        fetch("/chat/sendToChatGPT", {
+        // Mostrar el elemento de carga
+        loadingContainer.style.display = "flex";
+        const miedo = document.getElementById("miedo").value;
+        const ansiedad = document.getElementById("ansiedad").value;
+        const objeto = document.getElementById("objeto").value;
+
+        fetch(`/openia/sendToChatGPT`, {
           method: "POST",
-          // Agrega las opciones de la solicitud, como el cuerpo con los datos de inicio de sesión
           body: JSON.stringify({
-            q1: q1,
-            q2: q2,
-            q3: q3,
+            miedo,
+            ansiedad,
+            objeto,
           }),
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
         })
           .then(function (response) {
             console.log(response);
+            if (response.ok) {
+              return response.json();
+            } else {
+              showErrorModal(
+                "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+              );
+            }
+          })
+          .then((data) => {
+            console.log("data: ", data);
+            loadingContainer.style.display = "none";
+            responseContainer.innerText = data.text;
           })
           .catch(function (error) {
-            // Maneja los errores de la solicitud
             console.error(error);
+            loadingContainer.style.display = "none";
+            showErrorModal(
+              "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+            );
+          });
 
-            // Redirige a una página de inicio de sesión fallida o muestra un mensaje de error
-            // ...
+        fetch(`/openia/generateImg`, {
+          method: "POST",
+          body: JSON.stringify({
+            miedo,
+            ansiedad,
+            objeto,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then(function (response) {
+            console.log(response);
+            if (response.ok) {
+              return response.json();
+            } else {
+              showErrorModal(
+                "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+              );
+            }
+          })
+          .then((data) => {
+            console.log("data image: ", data);
+            const responseImage = document.getElementById("responseImage");
+            responseImage.setAttribute("src", data.url);
+          })
+          .catch(function (error) {
+            console.error(error);
+            loadingContainer.style.display = "none";
+            showErrorModal(
+              "Al parecer aún no estas listo para descubrir esta historia, intenta de nuevo"
+            );
           });
       }
-
     </script>
   </body>
 </html>
