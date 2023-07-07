@@ -107,6 +107,21 @@
         margin-left: auto;
         margin-right: auto;
       }
+
+      .card-content {
+        max-width: 900px;
+        padding-top: 0px;
+        padding: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: rgba(77, 77, 77, 0.6);
+        border-radius: 10px;
+      }
+
+      .card-response {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
     </style>
   </head>
   <body class="image-background">
@@ -189,13 +204,17 @@
       <div
         class="bg-gray-800 bg-opacity-75 flex flex-col items-center justify-center p-4 rounded"
       >
-        <h2 class="text-white text-2xl font-bold mb-4">Error</h2>
+        <h2 class="text-white text-2xl font-bold mb-4 texto">Error</h2>
         <p class="text-white text-lg" id="errorMessage"></p>
         <button id="closeModalButton" class="btn-blood mt-4">Cerrar</button>
       </div>
     </div>
     <!-- Elemento de respuesta -->
-    <div id="responseContainer" class="mt-4 text-center text-white"></div>
+    <div class="card-response">
+      <div class="card-content">
+        <div id="responseContainer" class="mt-4 text-center text-white texto" style="font-size: 20px;"></div>
+      </div>
+    </div>
     <!-- Elemento de imagen de respuesta -->
     <img
       id="responseImage"
@@ -213,10 +232,10 @@
       <div class="flex items-center bg-white rounded-lg p-5">
         <div class="mr-3">
           <div
-            class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"
+            class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-900"
           ></div>
         </div>
-        <div class="text-gray-900">Cargando...</div>
+        <div class="text-gray-900 texto">Escribiendo tu historia...</div>
       </div>
     </div>
 

@@ -1,8 +1,5 @@
 const axios = require('axios');
 
-
-console.log('api key: ',)
-
 const openAiController = {
 
 
@@ -17,7 +14,7 @@ const openAiController = {
       //prompt: 'Hola!',
       messages: [{
         role: "user",
-        content: `Generame una historia de terror que tenga que ver con los temas de miedo hacia ${req.body.miedo}, ansiedad por ${req.body.ansiedad} y con ${req.body.objeto} sin incluir tu respuestas de "claro, te genero la historia", que empieze con "habia una vez" o algo por el estilo`
+        content: `Generame una historia de terror que tenga que ver con los temas de temor por ${req.body.miedo}, inquietud por ${req.body.ansiedad} y preocupación por ${req.body.objeto} sin incluir tu respuestas de "claro, te genero la historia", que empieze con "habia una vez" o algo por el estilo`
       }],
       //max_tokens: 50,
       model: "gpt-3.5-turbo-0301",
