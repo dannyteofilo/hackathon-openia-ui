@@ -10,9 +10,9 @@
       rel="stylesheet"
     />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap");
       .texto {
-        font-family: 'Jolly Lodger', cursive;
+        font-family: "Jolly Lodger", cursive;
         letter-spacing: 1px;
       }
 
@@ -30,7 +30,7 @@
       }
 
       .btn-blood::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: -100%;
@@ -59,23 +59,114 @@
         color: whitesmoke;
       }
 
-      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      ::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: #bbbbbb !important;
         opacity: 1; /* Firefox */
       }
 
-      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      :-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
         color: #bbbbbb !important;
       }
 
-      ::-ms-input-placeholder { /* Microsoft Edge */
+      ::-ms-input-placeholder {
+        /* Microsoft Edge */
         color: #bbbbbb !important;
       }
     </style>
   </head>
   <body class="bg-black">
     <div class="flex flex-col items-center justify-center h-screen">
-      <h1 class="text-4xl font-bold text-white texto">¿Estas listo para descubrir tus mayores temores?</h1>
+      <h1 class="text-4xl font-bold text-white texto">
+        ¿Estas listo para descubrir tus mayores temores?
+      </h1>
+      <form class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <img src="/assets/ojo.gif" class="ojo-gif" />
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 text-white texto form-label"
+            for="question1"
+          >
+            Question 1?
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline texto form-input"
+            id="question1"
+            type="text"
+            placeholder="Ingrese tu pregunta"
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 text-white texto form-label"
+            for="question1"
+          >
+            Question 2?
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline texto form-input"
+            id="question2"
+            type="text"
+            placeholder="Ingrese tu pregunta"
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 text-white texto form-label"
+            for="question3"
+          >
+            Question 1?
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline texto form-input"
+            id="question3"
+            type="text"
+            placeholder="Ingrese tu pregunta"
+          />
+        </div>
+
+        <div class="flex items-center justify-end centered">
+          <button
+            id="loginButton"
+            class="btn-blood hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline centered texto"
+            type="button"
+            onclick="handleSubmit()"
+          >
+            Consultar
+          </button>
+        </div>
+      </form>
     </div>
+    <script>
+      function handleSubmit() {
+        const q1 = document.getElementById("question1").value;
+        const q2 = document.getElementById("question2").value;
+        const q3 = document.getElementById("question3").value;
+
+        fetch("/chat/sendToChatGPT", {
+          method: "POST",
+          // Agrega las opciones de la solicitud, como el cuerpo con los datos de inicio de sesión
+          body: JSON.stringify({
+            q1: q1,
+            q2: q2,
+            q3: q3,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            // Maneja los errores de la solicitud
+            console.error(error);
+
+            // Redirige a una página de inicio de sesión fallida o muestra un mensaje de error
+            // ...
+          });
+      }
+    </script>
   </body>
 </html>
