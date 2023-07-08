@@ -39,7 +39,7 @@ const openAiController = {
 
   generateImg: function (req, res) {
     // Parámetros de configuración
-    const prompt = `Una imagen siniestra que tenga que ver con los temas de ${req.body.miedo}, ${req.body.ansiedad} y ${req.body.objeto}`; // Texto que sirve de inspiración para la generación de la imagen
+    const prompt = `Una imagen siniestra que tenga que ver con los temas de temor por ${req.body.miedo}, ${req.body.ansiedad} y ${req.body.objeto}`; // Texto que sirve de inspiración para la generación de la imagen
     const numImages = 1; // Número de imágenes a generar
 
     // URL de la API de DALL-E
