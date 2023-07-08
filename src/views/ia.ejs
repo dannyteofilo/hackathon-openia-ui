@@ -122,6 +122,14 @@
         margin-top: 20px;
         margin-bottom: 20px;
       }
+
+      .resp-img {
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        border-radius: 10px;
+        border: black solid 2px;
+      }
     </style>
   </head>
   <body class="image-background">
@@ -205,18 +213,19 @@
         class="bg-gray-800 bg-opacity-75 flex flex-col items-center justify-center p-4 rounded"
       >
         <h2 class="text-white text-2xl font-bold mb-4 texto">Error</h2>
-        <p class="text-white text-lg" id="errorMessage"></p>
+        <p class="text-white text-lg texto" id="errorMessage"></p>
         <button id="closeModalButton" class="btn-blood mt-4">Cerrar</button>
       </div>
     </div>
-    <!-- Elemento de respuesta -->
-    <div class="card-response">
+
+    <div id="responseDiv" class="card-response">
       <div class="card-content">
+        <!-- Elemento de imagen de respuesta -->
+        <img id="responseImage" class="resp-img"></img>
+        <!-- Elemento de respuesta -->
         <div id="responseContainer" class="mt-4 text-center text-white texto" style="font-size: 20px;"></div>
       </div>
     </div>
-    <!-- Elemento de imagen de respuesta -->
-    <div id="responseImage"></div>
 
     <!-- Elemento de carga y mensaje -->
     <div
@@ -238,6 +247,7 @@
         const dismissDiv = document.getElementById("dismiss-div");
         const displayDiv = document.getElementById("display-div");
         const loadingContainer = document.getElementById("loadingContainer");
+        const responseDiv = document.getElementById("responseDiv");
 
         loadingContainer.style.display = "none";
 
@@ -245,10 +255,10 @@
           dismissDiv.style.opacity = 0;
 
           setTimeout(() => {
-            dismiss.style.display = 'none';
-            display.style.display = 'flex';
+            dismissDiv.style.display = 'none';
+            displayDiv.style.display = 'flex';
             setTimeout(() => {
-              display.style.opacity = 1;
+              displayDiv.style.opacity = 1;
             }, 200);
           }, 1000);
         }, 2000);
@@ -273,7 +283,6 @@
         const responseImageContainer = document.getElementById("responseImage");
 
         responseContainer.innerText = "";
-        responseImageContainer.innerHTML = "";
         loadingContainer.style.display = "flex";
 
         const miedo = document.getElementById("miedo").value;
@@ -337,10 +346,8 @@
             }
           })
           .then((data) => {
-            const image = document.createElement("img");
-            image.src = data.data.url;
-            image.alt = "Descripción de la imagen";
-            responseImageContainer.appendChild(image);
+            const imgElement = document.getElementById("responseImage");
+            imgElement.src = data.data.url;
           })
           .catch((error) => {
             console.error(error);
