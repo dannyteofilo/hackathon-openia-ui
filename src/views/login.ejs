@@ -191,10 +191,10 @@
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        fetch("/auth/register", {
+        fetch("https://hack2023-1636591a02d6.herokuapp.com/saveUser", {
           method: "POST",
           body: JSON.stringify({
-            username: username,
+            email: username,
             password: password,
           }),
           headers: {
